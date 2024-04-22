@@ -1,4 +1,10 @@
 """
+You are given two integer arrays nums1 and nums2, sorted in non-decreasing order, and two integers m and n, representing the number of elements in nums1 and nums2 respectively.
+
+Merge nums1 and nums2 into a single array sorted in non-decreasing order.
+
+The final sorted array should not be returned by the function, but instead be stored inside the array nums1. To accommodate this, nums1 has a length of m + n, where the first m elements denote the elements that should be merged, and the last n elements are set to 0 and should be ignored. nums2 has a length of n.
+
 Example 1:
 
 Input: nums1 = [1,2,3,0,0,0], m = 3, nums2 = [2,5,6], n = 3
@@ -20,3 +26,35 @@ The result of the merge is [1].
 Note that because m = 0, there are no elements in nums1. The 0 is only there to ensure the merge result can fit in nums1.
 
 """
+
+class Solution:
+    def merge(self, nums1, m: int, nums2, n: int) -> None:
+        """
+        Do not return anything, modify nums1 in-place instead.
+        """
+        left_part = nums1[:m]
+        right_part = nums2[:n]
+        arr = [0] * (m + n)
+
+        i = j = k = 0
+        
+        while i < len(left_part) and j < len(right_part):
+            if left_part[i] < right_part[j]:
+                arr[k] = left_part[i]
+                i += 1
+            else:
+                arr[k] = right_part[j]
+                j += 1
+            k += 1
+
+        while i < len(left_part):
+            arr[k] = left_part[i]
+            i += 1
+            k += 1
+        while j < len(right_part):
+            arr[k] = right_part[j]
+            j += 1
+            k += 1
+        
+        nums1 = arr[::]
+        return nums1
